@@ -46,7 +46,7 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block}.containe
 
 .base-video-frame{width:min(100%,360px);aspect-ratio:9/16;border-radius:30px;background:linear-gradient(135deg,var(--blue),var(--mint));overflow:hidden;display:grid;place-items:center;text-align:center;color:var(--primary-dark);font-weight:900;position:relative;box-shadow:0 18px 38px rgba(19,46,53,.16)}
 .base-video-frame:before{content:'';position:absolute;inset:0;border:1px solid rgba(255,255,255,.75);border-radius:30px;pointer-events:none;z-index:2}
-.base-video-frame iframe{width:100%;height:100%;border:0;position:relative;z-index:1}
+.base-video-frame iframe{width:100%;height:100%;border:0;position:relative;z-index:1;background:#000}
 .base-video-placeholder{padding:26px}
 .base-video-placeholder strong{display:block;font-size:18px;margin-bottom:8px}
 .base-video-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -293,9 +293,7 @@ function renderGroupedDocs(containerId, groups) {
 
 function googleDriveVideoEmbed(link, title) {
   if (!link || link === '#') {
-    return `
-      <div class="base-video-frame"></div>
-    `;
+    return `<div class="base-video-frame"></div>`;
   }
 
   const driveMatch = link.match(/\/d\/([^/]+)/) || link.match(/[?&]id=([^&]+)/);
@@ -307,7 +305,7 @@ function googleDriveVideoEmbed(link, title) {
           src="https://drive.google.com/file/d/${driveMatch[1]}/preview"
           title="${title}"
           loading="lazy"
-          allow="autoplay; fullscreen"
+          allow="autoplay"
           allowfullscreen>
         </iframe>
       </div>
@@ -322,7 +320,7 @@ function googleDriveVideoEmbed(link, title) {
         src="${embedLink}"
         title="${title}"
         loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen>
       </iframe>
     </div>
@@ -333,23 +331,18 @@ function renderVideos(containerId, items) {
   const el = document.getElementById(containerId);
   if (!el) return;
 
-  el.innerHTML = items.map((item, index) => {
-    const link = item.link || '#';
-    const featuredClass = '';
-
+  el.innerHTML = items.map(item => {
     return `
-      <article class="base-video-card${featuredClass} reveal">
+      <article class="base-video-card reveal">
         <div class="base-video-head">
           <div class="base-video-icon">▶</div>
           <div>
             <h3>${item.title}</h3>
           </div>
-          ${featuredClass ? `
-          ` : ''}
         </div>
 
         <div class="base-video-frame-wrap">
-          ${googleDriveVideoEmbed(link, item.title)}
+          ${googleDriveVideoEmbed(item.link || '#', item.title)}
         </div>
       </article>
     `;
