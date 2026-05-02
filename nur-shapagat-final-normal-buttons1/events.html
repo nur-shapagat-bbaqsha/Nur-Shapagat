@@ -25,7 +25,7 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block}.containe
 
 
 /* Events page: stylish Google Drive video group cards */
-.events-block{padding:50px 0 0}.events-title{margin:0 0 18px;font-size:clamp(28px,4vw,42px);line-height:1.12;letter-spacing:-.03em}.events-lead{margin:0 0 24px;color:var(--muted);font-weight:700;font-size:18px}.group-video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:58px}.group-video-card{background:rgba(255,255,255,.94);border:1px solid rgba(43,183,167,.14);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}.group-video-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 20px 14px}.group-video-top h3{margin:0;font-size:24px;line-height:1.2}.group-video-count{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:999px;background:var(--mint);color:var(--primary-dark);font-weight:900}.video-carousel{position:relative}.video-track{display:flex;transition:transform .45s ease}.video-slide{min-width:100%;padding:0 20px 20px}.youtube-frame{aspect-ratio:16/9;border-radius:24px;background:linear-gradient(135deg,var(--blue),var(--mint));overflow:hidden;display:grid;place-items:center;text-align:center;color:var(--primary-dark);font-weight:900}.youtube-frame iframe{width:100%;height:100%;border:0}.youtube-placeholder{padding:22px}.video-caption{margin:12px 0 0;color:var(--muted);font-weight:800}.video-controls{display:flex;align-items:center;justify-content:center;gap:10px;padding:0 20px 20px}.video-controls button{border:0;border-radius:999px;background:var(--mint);color:var(--primary-dark);font-weight:900;width:40px;height:40px;cursor:pointer}.video-dots{display:flex;gap:7px}.video-dots button{width:9px;height:9px;padding:0;background:rgba(43,183,167,.28)}.video-dots button.active{width:24px;background:var(--primary)}@media (max-width:900px){.group-video-grid{grid-template-columns:1fr}}
+.events-block{padding:50px 0 0}.events-title{margin:0 0 18px;font-size:clamp(28px,4vw,42px);line-height:1.12;letter-spacing:-.03em}.events-lead{margin:0 0 24px;color:var(--muted);font-weight:700;font-size:18px}.group-video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:58px}.group-video-card{background:rgba(255,255,255,.94);border:1px solid rgba(43,183,167,.14);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}.group-video-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 20px 14px}.group-video-top h3{margin:0;font-size:24px;line-height:1.2}.group-video-count{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:999px;background:var(--mint);color:var(--primary-dark);font-weight:900}.video-carousel{position:relative}.video-track{display:flex;transition:transform .45s ease}.video-slide{min-width:100%;padding:0 20px 20px}.youtube-frame{width:min(100%,360px);aspect-ratio:9/16;margin:auto;border-radius:24px;background:linear-gradient(135deg,var(--blue),var(--mint));overflow:hidden;display:grid;place-items:center;text-align:center;color:var(--primary-dark);font-weight:900;box-shadow:0 18px 38px rgba(19,46,53,.16)}.youtube-frame iframe{width:100%;height:100%;border:0;background:#000}.youtube-placeholder{padding:22px}.video-caption{margin:12px 0 0;color:var(--muted);font-weight:800}.video-controls{display:flex;align-items:center;justify-content:center;gap:10px;padding:0 20px 20px}.video-controls button{border:0;border-radius:999px;background:var(--mint);color:var(--primary-dark);font-weight:900;width:40px;height:40px;cursor:pointer}.video-dots{display:flex;gap:7px}.video-dots button{width:9px;height:9px;padding:0;background:rgba(43,183,167,.28)}.video-dots button.active{width:24px;background:var(--primary)}@media (max-width:900px){.group-video-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body data-page="events">
@@ -391,14 +391,7 @@ const EVENT_GROUP_VIDEOS = [
 
 function videoFrame(link, title) {
   if (!link || link === '#') {
-    return `
-      <div class="youtube-frame">
-        <div class="youtube-placeholder">
-          [GOOGLE_DRIVE_VIDEO_LINK]<br>
-          <small>${title} үшін Google Drive видео сілтемесін қойыңыз</small>
-        </div>
-      </div>
-    `;
+    return `<div class="youtube-frame"></div>`;
   }
 
   const driveMatch = link.match(/\/d\/([^/]+)/) || link.match(/[?&]id=([^&]+)/);
@@ -482,7 +475,7 @@ function renderEventPage() {
     <section class="events-block reveal">
       <span class="eyebrow">Видео материалдар</span>
       <h2 class="events-title">Топтар бойынша бейнематериалдар</h2>
-      <p class="events-lead">Әр топқа бір немесе бірнеше Google Drive видео қосуға болады.</p>
+      
       <div class="group-video-grid">
         ${EVENT_GROUP_VIDEOS.map(groupVideoCard).join('')}
       </div>
