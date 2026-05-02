@@ -100,8 +100,13 @@ function isPlaceholderLink(link) {
 }
 function convertGoogleDriveImageLink(link) {
   if (isPlaceholderLink(link)) return '';
+
   const match = link.match(/\/d\/([^/]+)/) || link.match(/[?&]id=([^&]+)/);
-  if (match && match[1]) return `https://lh3.googleusercontent.com/d/${match[1]}`;
+
+  if (match && match[1]) {
+    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1200`;
+  }
+
   return link;
 }
 function convertYouTubeEmbedLink(link) {
@@ -146,11 +151,13 @@ const MENU = [
 const LINKS = {
   kindergartenPhoto: 'https://drive.google.com/file/d/10M7JnGT0f7ynVRMUzfwzV3ryf6JiWN75/view?usp=sharing',
   photos: [
-    '[PHOTO_1_GOOGLE_DRIVE_LINK]',
-    '[PHOTO_2_GOOGLE_DRIVE_LINK]',
-    '[PHOTO_3_GOOGLE_DRIVE_LINK]',
-    '[PHOTO_4_GOOGLE_DRIVE_LINK]',
-    '[PHOTO_5_GOOGLE_DRIVE_LINK]'
+    'https://drive.google.com/file/d/1wXqIXENRHE-xghGVZkXJlkrBw1K3lBrb/view?usp=drive_link',
+    'https://drive.google.com/file/d/1KzpxmfOBxR93VE4maghMSiJt_CaYfQnA/view?usp=drive_link',
+    'https://drive.google.com/file/d/158Lz43SrQV0SEaSWgOz9mfLHTdFo-nT8/view?usp=drive_link',
+    'https://drive.google.com/file/d/1mpZQdDvTiKwCyCltpc4SCfuxQ9X0g5xm/view?usp=drive_link',
+    'https://drive.google.com/file/d/1117TmNcaEe_naeNJw3KoZ25uZ1eF_aMH/view?usp=drive_link',
+    'https://drive.google.com/file/d/1GG-D43z9ZQNT8loO2r4jg_S-YRWM705K/view?usp=drive_link',
+    
   ]
 };
 
@@ -371,7 +378,7 @@ function initCarousel() {
 function renderHome() {
   const photoTrack = document.querySelector('.carousel-track');
   if (photoTrack) {
-    photoTrack.innerHTML = LINKS.photos.map((src, i) => { const imgSrc = convertGoogleDriveImageLink(src); const img = imgSrc ? `<img src="${imgSrc}" alt="Балабақша фотосы ${i + 1}">` : `<div class="photo-placeholder">[PHOTO_${i + 1}_GOOGLE_DRIVE_LINK]</div>`; return `<div class="carousel-slide">${img}<span>Фото ${i + 1}</span></div>`; }).join('');
+    photoTrack.innerHTML = LINKS.photos.map((src, i) => { const imgSrc = convertGoogleDriveImageLink(src); const img = imgSrc ? `<img src="${imgSrc}" alt="Балабақша фотосы ${i + 1}">` : `<div class="photo-placeholder">Фото ${i + 1}<br><small># орнына Google Drive ссылка қойыңыз</small></div>`; return `<div class="carousel-slide">${img}<span>Фото ${i + 1}</span></div>`; }).join('');
   }
   const newsEl = document.getElementById('news-grid');
   if (newsEl) {
